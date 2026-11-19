@@ -29,6 +29,7 @@ class RaddadApp extends StatelessWidget {
           localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate, GlobalCupertinoLocalizations.delegate],
           theme: ThemeData(
             useMaterial3: true,
+            fontFamily: 'CoconNextArabic',
             colorScheme: ColorScheme.fromSeed(seedColor: C.primary, primary: C.primary),
             scaffoldBackgroundColor: C.bg,
             appBarTheme: const AppBarTheme(centerTitle: true, backgroundColor: Colors.white, foregroundColor: C.primaryDark, surfaceTintColor: Colors.white),
