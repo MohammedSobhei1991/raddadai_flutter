@@ -1,4 +1,4 @@
-package com.raddad.raddad_merchant
+package com.raddad.restaurant
 
 import io.flutter.embedding.android.FlutterActivity
 
