@@ -27,6 +27,12 @@ class PushService {
       _ready = true;
       // الضغط على إشعار FCM والتطبيق في الخلفية أو مغلقاً → فتح الطلب/المحادثة مباشرة
       FirebaseMessaging.onMessageOpenedApp.listen((m) => open(m.data['type'] as String?, m.data['id']));
+      // FCM لا يعرض الإشعار بنفسه والتطبيق مفتوح، فنعرضه كتنبيه محلي فوراً
+      FirebaseMessaging.onMessage.listen((m) {
+        final n = m.notification;
+        if (n == null) return;
+        LocalAlerts.show(n.title ?? '', n.body, payload: '${m.data['type']}:${m.data['id']}');
+      });
       final initial = await FirebaseMessaging.instance.getInitialMessage();
       if (initial != null) open(initial.data['type'] as String?, initial.data['id']);
       FirebaseMessaging.instance.onTokenRefresh.listen((t) {
@@ -115,7 +121,15 @@ class LocalAlerts {
     _ready = true;
   }
 
+  static final _recent = <String, DateTime>{};
+
   static Future<void> show(String title, String? body, {String? payload}) async {
+    // نفس الإشعار قد يصل من FCM ومن التحديث الدوري: نعرضه مرة واحدة
+    final key = '$title|$body';
+    final now = DateTime.now();
+    _recent.removeWhere((_, t) => now.difference(t).inSeconds > 90);
+    if (_recent.containsKey(key)) return;
+    _recent[key] = now;
     await init();
     await _plugin.show(
       id: _id++,

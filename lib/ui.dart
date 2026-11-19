@@ -91,7 +91,7 @@ class Chips<V> extends StatelessWidget {
 class LanguageSwitch extends StatelessWidget {
   const LanguageSwitch({super.key});
   @override
-  Widget build(BuildContext context) => Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+  Widget build(BuildContext context) => arabicOnly ? const SizedBox.shrink() : Row(mainAxisAlignment: MainAxisAlignment.center, children: [
         for (final (v, label) in [('ar', 'العربية'), ('tr', 'Türkçe')])
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 3),

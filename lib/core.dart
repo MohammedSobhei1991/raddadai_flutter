@@ -8,6 +8,9 @@ import 'package:http/http.dart' as http;
 import 'i18n_tr.dart';
 
 // ---------- i18n (النص العربي هو المفتاح) ----------
+/// مؤقتاً: التطبيق بالعربية فقط (يُخفي مبدّل اللغة ويتجاهل لغة الحساب/المحفوظة). غيّرها إلى false لإعادة التركية.
+const arabicOnly = true;
+
 class L10n extends ChangeNotifier {
   String locale = 'ar';
   bool get rtl => locale == 'ar';
@@ -20,6 +23,7 @@ class L10n extends ChangeNotifier {
 
   Future<void> apply(String? value, {bool save = true}) async {
     if (value != 'ar' && value != 'tr') return;
+    if (arabicOnly && value != 'ar') return;
     if (value == locale) return;
     locale = value!;
     if (save) await storage.write(key: 'app_locale', value: value);
