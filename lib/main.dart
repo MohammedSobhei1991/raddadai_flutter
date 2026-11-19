@@ -21,6 +21,7 @@ class RaddadApp extends StatelessWidget {
   Widget build(BuildContext context) => ListenableBuilder(
         listenable: Listenable.merge([l10n, auth]),
         builder: (context, _) => MaterialApp(
+          navigatorKey: navigatorKey,
           debugShowCheckedModeBanner: false,
           title: 'رداد - المطعم',
           locale: Locale(l10n.locale),

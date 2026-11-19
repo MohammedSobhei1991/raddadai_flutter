@@ -24,6 +24,7 @@ class _ShellState extends PollState<Shell> {
 
   @override
   Future<void> load() async {
+    PushService.flush(); // إشعار ضُغط عليه والتطبيق مغلق: افتح الطلب الآن بعد الدخول
     try {
       final s = await api('/stats');
       safeSet(() => stats = s);
@@ -35,7 +36,7 @@ class _ShellState extends PollState<Shell> {
       final newest = latest.first['id'] as int;
       if (lastSeen != null && newest > lastSeen!) {
         for (final x in latest.where((x) => (x['id'] as int) > lastSeen! && x['read'] != true).toList().reversed) {
-          await LocalAlerts.show('${x['icon']} ${x['title']}', x['body'] as String?);
+          await LocalAlerts.show('${x['icon']} ${x['title']}', x['body'] as String?, payload: '${x['target_type']}:${x['target_id']}');
         }
       }
       lastSeen = newest > (lastSeen ?? 0) ? newest : lastSeen;
