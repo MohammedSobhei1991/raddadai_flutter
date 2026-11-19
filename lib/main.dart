@@ -3,12 +3,14 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'auth.dart';
 import 'core.dart';
+import 'push.dart';
 import 'screens/login.dart';
 import 'screens/shell.dart';
 import 'ui.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PushService.init();
   auth.init();
   runApp(const RaddadApp());
 }

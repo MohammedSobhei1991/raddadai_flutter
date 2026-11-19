@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 
 import 'core.dart';
+import 'push.dart';
 
 class Auth extends ChangeNotifier {
   bool ready = false;
@@ -39,6 +40,7 @@ class Auth extends ChangeNotifier {
     await l10n.apply(me['locale'] as String?);
     user = me;
     notifyListeners();
+    PushService.register();
   }
 
   Future<void> _sign(String path, J body) async {
@@ -53,8 +55,9 @@ class Auth extends ChangeNotifier {
 
   Future<void> logout() async {
     try {
-      await api('/logout', method: 'POST', body: {});
+      await api('/logout', method: 'POST', body: {if (PushService.token != null) 'push_token': PushService.token});
     } catch (_) {}
+    PushService.markLoggedOut();
     await clear();
   }
 
