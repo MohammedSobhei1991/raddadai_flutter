@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "49095062557",
+    "project_id": "raddadai",
+    "storage_bucket": "raddadai.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49095062557:android:07482179e9211a28fcc2f4",
+        "android_client_info": {
+          "package_name": "com.raddad.restaurant"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsdszAKn6K8YvcFVshmeWFEok-fvARV-E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
