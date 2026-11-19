@@ -43,7 +43,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 CardBox(gap: 12, children: [
                   Center(
                     child: Column(children: [
-                      const Text('🍽', style: TextStyle(fontSize: 40)),
+                      ClipRRect(borderRadius: BorderRadius.circular(18), child: Image.asset('assets/logo.png', width: 72, height: 72)),
                       const SizedBox(height: 6),
                       Text(t('لوحة تحكم المطعم'), style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
                       Text(t('الطلبات ومحادثات واتساب في جيبك'), textAlign: TextAlign.center, style: const TextStyle(color: C.muted)),
