@@ -15,7 +15,7 @@ class ConversationScreen extends StatefulWidget {
 class _ConversationScreenState extends PollState<ConversationScreen> {
   J? conversation;
   List<J> messages = [];
-  bool canReply = false, sending = false;
+  bool canReply = false, sending = false, ordersOpen = false;
   int lastId = 0;
   final text = TextEditingController();
   final scroll = ScrollController();
@@ -103,19 +103,44 @@ class _ConversationScreenState extends PollState<ConversationScreen> {
             Row(children: [
               for (final a in actions) Expanded(child: Padding(padding: const EdgeInsets.symmetric(horizontal: 4), child: Btn(a.$2, () => changeStatus(a.$1), color: a.$3))),
             ]),
-            for (final o in orders)
+            if (orders.isNotEmpty) ...[
+              // قائمة الطلبات مطوية افتراضياً حتى لا تغطي المحادثة؛ وعند فتحها تأخذ ارتفاعاً محدوداً وتُمرَّر
               GestureDetector(
-                onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OrderScreen(id: o['id'] as int))),
+                onTap: () => setState(() => ordersOpen = !ordersOpen),
                 child: Container(
                   margin: const EdgeInsets.only(top: 8),
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
                   decoration: BoxDecoration(color: C.bg, borderRadius: BorderRadius.circular(8)),
                   child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                    Text('${t('🧾 طلب #{number}', {'number': o['number']})} · ${o['total']}', style: const TextStyle(fontSize: 13)),
-                    Badge2(orderTone('${o['status']}', '${o['fulfillment']}')),
+                    Text('${t('🧾 الطلبات')} (${orders.length})', style: const TextStyle(fontSize: 13, fontWeight: FontWeight.w600)),
+                    Icon(ordersOpen ? Icons.keyboard_arrow_up : Icons.keyboard_arrow_down, color: C.muted),
                   ]),
                 ),
               ),
+              if (ordersOpen)
+                ConstrainedBox(
+                  constraints: const BoxConstraints(maxHeight: 170),
+                  child: ListView(
+                    shrinkWrap: true,
+                    padding: EdgeInsets.zero,
+                    children: [
+                      for (final o in orders)
+                        GestureDetector(
+                          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (_) => OrderScreen(id: o['id'] as int))),
+                          child: Container(
+                            margin: const EdgeInsets.only(top: 6),
+                            padding: const EdgeInsets.all(8),
+                            decoration: BoxDecoration(color: C.bg, borderRadius: BorderRadius.circular(8)),
+                            child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                              Text('${t('🧾 طلب #{number}', {'number': o['number']})} · ${o['total']}', style: const TextStyle(fontSize: 13)),
+                              Badge2(orderTone('${o['status']}', '${o['fulfillment']}')),
+                            ]),
+                          ),
+                        ),
+                    ],
+                  ),
+                ),
+            ],
           ]),
         ),
         Expanded(

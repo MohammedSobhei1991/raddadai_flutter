@@ -155,6 +155,7 @@ const Map<String, String> trStrings = {
   'أعدها للبوت': 'Bota Devret',
   'لم تُرسل الرسالة': 'Mesaj gönderilemedi',
   '🧾 طلب #{number}': '🧾 Sipariş #{number}',
+  '🧾 الطلبات': '🧾 Siparişler',
   '⬇️ فتح الملف': '⬇️ Dosyayı Aç',
   'اكتب ردك… (يوقف البوت في هذه المحادثة)': 'Yanıtınızı yazın… (bu sohbette botu durdurur)',
   'إرسال': 'Gönder',
